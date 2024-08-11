@@ -39,7 +39,7 @@ I want to make a simple web app for jotting down ideas so I can shift between my
 - [x] Add shadcn-ui to the project.
 - [x] Delete default app content, including the content on the home page, posts TRPC router, posts table in the db, and the posts components.
 - [x] Push the app to github and deploy to vercel.
-- [ ] Make the home page for the app including sign in buttons that work with github and google as well as a description of the project.
+- [x] Make the home page for the app including sign in buttons that work with github and google as well as a description of the project.
 - [ ] Set up redirecting if the user is signed in. If there is the ?redirect=0 search param in the URL the root page should no redirect if a user is signed in.
 - [ ] Make the /home page where the user sees all of their brain dumps
 - [ ] Add a button that redirects the user to the new brain dump page.
