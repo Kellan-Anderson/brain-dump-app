@@ -1,12 +1,23 @@
 import { promises as fs } from "fs";
 import Markdown from "react-markdown"
 import { Checkbox } from "~/components/ui/checkbox";
-import { SignInButton } from "./_components/signInButton";
+import { SignInButton } from "../components/signInButton";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { Link as LinkIcon } from "lucide-react";
+import { rejectRouteIfSignedIn } from "~/lib/protectRoute";
 
-export default async function Home() {
+type PageProps = {
+  searchParams: Record<string, string | string[]>
+}
+
+export default async function Home({ searchParams } : PageProps) {
+
+  const shouldRedirectIfSignedIn = [searchParams.redirect].flat().at(0) !== '0'
+  if(shouldRedirectIfSignedIn) {
+    await rejectRouteIfSignedIn()
+  }
+
   const readme = await fs.readFile(process.cwd() + '/README.md')
   
   return (
@@ -37,7 +48,7 @@ export default async function Home() {
                 if(elementText?.startsWith('[ ]')) {
                   return (
                     <li className="flex flex-row items-start justify-start gap-1 -ml-7">
-                      <Checkbox checked={false} className="rounded mt-2 mr-2"/>
+                      <Checkbox checked={false} className="rounded mt-2 mr-2 cursor-default"/>
                       {elementText.slice(4)}
                     </li>
                   );
@@ -46,7 +57,7 @@ export default async function Home() {
                 if(elementText?.startsWith('[x]')) {
                   return (
                     <li className="flex flex-row items-start justify-start gap-1 -ml-7">
-                      <Checkbox checked className="rounded mt-2 mr-2"/>
+                      <Checkbox checked className="rounded mt-2 mr-2 cursor-default"/>
                       {elementText.slice(4)}
                     </li>
                   );
